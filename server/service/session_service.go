@@ -42,7 +42,7 @@ func NewSessionService(cacheRepository model.CacheRepository) model.SessionServi
 	if os.Getenv("ENV") == "production" {
 		config.domain = "discord-clone.com"
 		config.secure = true
-		config.httpOnly = false
+		config.httpOnly = true
 	}
 
 	return &sessionService{

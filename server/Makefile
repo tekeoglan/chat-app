@@ -28,7 +28,7 @@ debug:
 dev:
 		export BUILD_TARGET=dev && make run
 prod:
-		export CONTEXT=production && make build && make up
+		export CONTEXT=production && make build && make detach
 stop:
 		$(cc) stop $(GENERIC)
 console:

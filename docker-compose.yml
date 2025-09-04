@@ -1,22 +1,41 @@
 version: "3.8"
 
 services:
+  client:
+    container_name: discord-clone-client-dev
+    build:
+      context: ./client
+      dockerfile: docker/Dockerfile.dev
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client/.env.development
+    depends_on:
+      - server
+
   server:
     build:
-      context: ..
+      context: ./server
       dockerfile: docker/Dockerfile.dev
       target: ${BUILD_TARGET}
     image: discord-server
     container_name: discord-server
     restart: unless-stopped
     ports:
-      - 8080:8080
-      - 2345:2345
+      - "8080:8080"
+      - "2345:2345"
     security_opt:
       - "seccomp:unconfined"
     depends_on:
       - mongodb
       - redis_cache
+    env_file:
+      - ./server/conf/dev.env
+
   mongodb:
     image: mongo
     container_name: mongodb
@@ -25,6 +44,7 @@ services:
       - "27017:27017"
     volumes:
       - dbdata:/data/db
+
   redis_cache:
     image: redis:6.2-alpine
     hostname: redis
@@ -34,6 +54,7 @@ services:
       - "6379:6379"
     volumes:
       - cache:/data/redis_cache
+
 volumes:
   dbdata:
   cache:

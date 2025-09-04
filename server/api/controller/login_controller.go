@@ -41,6 +41,8 @@ func (lc *LoginController) Login(c *gin.Context) {
 		return
 	}
 
+	c.SetSameSite(http.SameSiteNoneMode)
+
 	c.SetCookie(model.COOKIE_PREFIX_SESSION, sessionId, lc.SessionService.GetCokiExpr(),
 		lc.SessionService.GetCokiPath(), lc.SessionService.GetCokiDomain(),
 		lc.SessionService.IsCokiSecure(), lc.SessionService.IsCokiHttpOnly())
