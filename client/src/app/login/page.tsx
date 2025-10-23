@@ -30,7 +30,7 @@ export default function Login() {
         if (response.ok) {
           const data = await response.json();
           setUser(data);
-          return router.replace("/channels/me");
+          return router.push("/channels/me");
         } else {
           setState("loaded");
         }

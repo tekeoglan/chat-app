@@ -48,7 +48,7 @@ export default function LoginForm() {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
-        return router.replace("/channels/me");
+        return router.push("/channels/me");
       } else {
         setValid(false);
         setFetching(false);
@@ -74,9 +74,8 @@ export default function LoginForm() {
           <label className="flex items-center mb-1 text-sm font-semibold text-neutral-300 uppercase">
             email
             <span
-              className={`ml-1 font-light text-xs normal-case ${
-                valid ? "hidden" : "text-red-500"
-              }`}
+              className={`ml-1 font-light text-xs normal-case ${valid ? "hidden" : "text-red-500"
+                }`}
             >
               {"-"}
               <span className="ml-1">{errMessage}</span>
@@ -93,9 +92,8 @@ export default function LoginForm() {
           <label className="flex items-center mb-1 text-sm font-semibold text-neutral-300 uppercase">
             password
             <span
-              className={`ml-1 font-light text-xs normal-case ${
-                valid ? "hidden" : "text-red-500"
-              }`}
+              className={`ml-1 font-light text-xs normal-case ${valid ? "hidden" : "text-red-500"
+                }`}
             >
               {"-"}
               <span className="ml-1">{errMessage}</span>

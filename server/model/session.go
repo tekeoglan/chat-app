@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"net/http"
 	"time"
 )
 
@@ -17,6 +18,7 @@ type SessionService interface {
 	GetCokiDomain() string
 	GetCokiExpr() int
 	GetExpr() time.Duration
+	GetSameSite() http.SameSite
 	IsCokiSecure() bool
 	IsCokiHttpOnly() bool
 }

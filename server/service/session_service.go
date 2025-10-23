@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"time"
 
@@ -18,6 +19,7 @@ var config *sessionConfig
 type sessionConfig struct {
 	cookieExpr  int
 	sessionExpr time.Duration
+	sameSite    http.SameSite
 	path        string
 	domain      string
 	secure      bool
@@ -32,17 +34,18 @@ type sessionService struct {
 func NewSessionService(cacheRepository model.CacheRepository) model.SessionService {
 	config = &sessionConfig{
 		cookieExpr:  24 * 60 * 60,
-		domain:      "localhost",
+		domain:      "",
 		path:        "/",
-		secure:      false,
-		httpOnly:    false,
+		secure:      true,
+		httpOnly:    true,
 		sessionExpr: time.Hour * 24,
+		sameSite:    http.SameSiteLaxMode,
 	}
 
 	if os.Getenv("ENV") == "production" {
 		config.domain = "discord-clone.com"
 		config.secure = true
-		config.httpOnly = true
+		config.httpOnly = false
 	}
 
 	return &sessionService{
@@ -94,4 +97,8 @@ func (ss *sessionService) IsCokiSecure() bool {
 
 func (ss *sessionService) IsCokiHttpOnly() bool {
 	return config.httpOnly
+}
+
+func (ss *sessionService) GetSameSite() http.SameSite {
+	return config.sameSite
 }

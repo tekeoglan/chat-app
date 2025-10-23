@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github/tekeoglan/discord-clone/model"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -41,7 +42,7 @@ func (lc *LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	c.SetSameSite(http.SameSiteNoneMode)
+	c.SetSameSite(lc.SessionService.GetSameSite())
 
 	c.SetCookie(model.COOKIE_PREFIX_SESSION, sessionId, lc.SessionService.GetCokiExpr(),
 		lc.SessionService.GetCokiPath(), lc.SessionService.GetCokiDomain(),

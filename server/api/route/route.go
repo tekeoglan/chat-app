@@ -22,6 +22,7 @@ func Setup(env *bootstrap.Env, timeout time.Duration, db mongo.Database,
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowOrigins = []string{env.ClientAddress}
 	corsConfig.AllowCredentials = true
+	corsConfig.AllowHeaders = []string{"Content-Type", "Authorization"}
 
 	gin.Use(cors.New(corsConfig))
 
