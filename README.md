@@ -1,6 +1,6 @@
-# Discord Clone
+# Chat App
 
-This is a full-stack implementation of a Discord-like application featuring real-time chat, user authentication, and more.
+This is a full-stack implementation of a chat application featuring real-time chat, user authentication, and more.
 
 ## Overview
 
