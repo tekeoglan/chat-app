@@ -6,6 +6,30 @@ This is a full-stack implementation of a chat application featuring real-time ch
 
 The project is a monorepo with a Go backend and a Next.js frontend. It uses WebSockets for real-time communication and is fully containerized with Docker.
 
+
+<table>
+  <tr>
+    <td align="center">
+    <b>login</b>
+    <img src="assets/login.gif" /><br/>
+    </td>
+    <td align="center">
+          <b>register</b>
+      <img src="assets/register.gif" /><br/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+          <b>friend request</b>
+      <img src="assets/add_friend.gif" /><br/>
+    </td>
+    <td align="center">
+    <b>chat</b>
+      <img src="assets/chat.gif" /><br/> 
+    </td>
+  </tr>
+</table>
+
 ## Features
 
 *   User authentication (registration and login)
