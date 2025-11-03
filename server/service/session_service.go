@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github/tekeoglan/discord-clone/bootstrap"
 	"github/tekeoglan/discord-clone/model"
 )
 
@@ -32,6 +33,8 @@ type sessionService struct {
 }
 
 func NewSessionService(cacheRepository model.CacheRepository) model.SessionService {
+	env := bootstrap.NewEnv()
+
 	config = &sessionConfig{
 		cookieExpr:  24 * 60 * 60,
 		domain:      "",
@@ -43,7 +46,7 @@ func NewSessionService(cacheRepository model.CacheRepository) model.SessionServi
 	}
 
 	if os.Getenv("ENV") == "production" {
-		config.domain = "discord-clone.com"
+		config.domain = env.CorsDomain
 		config.secure = true
 		config.httpOnly = false
 	}

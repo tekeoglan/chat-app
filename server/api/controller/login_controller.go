@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github/tekeoglan/discord-clone/model"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

@@ -21,6 +21,7 @@ type Env struct {
 	CachePort      string `mapstructure:"CACHE_PORT"`
 	CacheUser      string `mapstructure:"CACHE_USER"`
 	CachePass      string `mapstructure:"CACHE_PASSWORD"`
+	CorsDomain     string `mapstructure:"CORS_DOMAIN"`
 }
 
 func NewEnv() *Env {
@@ -31,17 +32,37 @@ func NewEnv() *Env {
 
 	env := Env{}
 
-	viper.SetConfigFile("/etc/discord-clone/" + file)
+	viper.AddConfigPath("/etc/discord-clone/")
+	viper.SetConfigName(file)
+	viper.SetConfigType("env")
+	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal("Can't find the env file:", err)
+		// if config file is not provided fall back to system variables
+		env.AppEnv = viper.GetString("APP_ENV")
+		env.ServerAddress = viper.GetString("SERVER_ADDRESS")
+		env.ClientAddress = viper.GetString("CLIENT_ADDRESS")
+		env.ContextTimeout = viper.GetInt("CONTEXT_TIMOUT")
+		env.DBHost = viper.GetString("DBHost")
+		env.DBPort = viper.GetString("DBPort")
+		env.DBUser = viper.GetString("DB_USER")
+		env.DBPassword = viper.GetString("DB_PASSWORD")
+		env.DBName = viper.GetString("DB_NAME")
+		env.CacheHost = viper.GetString("CACHE_HOST")
+		env.CachePort = viper.GetString("CACHE_PORT")
+		env.CacheUser = viper.GetString("CACHE_USER")
+		env.CachePass = viper.GetString("CachePass")
+		env.CorsDomain = viper.GetString("CORS_DOMAIN")
+		log.Println("Can't find the env file:", err)
 	}
 
 	err = viper.Unmarshal(&env)
 	if err != nil {
 		log.Fatal("Can't decode env file: ", err)
 	}
+
+	log.Printf("domain: %v", env.CorsDomain)
 
 	if env.AppEnv == "development" {
 		log.Println("The app is running in development mode")
